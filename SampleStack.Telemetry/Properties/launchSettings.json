@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SampleStack.Telemetry": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}

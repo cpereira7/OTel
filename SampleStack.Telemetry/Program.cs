@@ -11,7 +11,10 @@ var host = Host.CreateDefaultBuilder(args)
 
         var httpClientConfiguration = new Action<HttpClient>(c =>
         {
-            c.BaseAddress = new Uri("http://localhost:5225/");
+            var apiAdress = Environment.GetEnvironmentVariable($"API_HOST") ?? "localhost";
+            var apiPort = Environment.GetEnvironmentVariable($"API_HTTP_PORT") ?? "8080";
+
+            c.BaseAddress = new Uri($"http://{apiAdress}:{apiPort}");
             c.Timeout = TimeSpan.FromSeconds(60);
         });
 
@@ -30,8 +33,14 @@ var host = Host.CreateDefaultBuilder(args)
 var httpClient = host.Services.GetRequiredService<IHttpClientFactory>().CreateClient("api");
 
 
+Console.WriteLine("Calling API");
+
 var response = await httpClient.GetAsync("/weatherforecast");
 
 var responseContent = await response.Content.ReadAsStringAsync();
 Console.WriteLine(response.Headers);
 Console.WriteLine(responseContent);
+
+Console.WriteLine("Calling 404");
+
+_ = await httpClient.GetAsync("/weatherforecast/null");

@@ -1,0 +1,18 @@
+services:
+  telemetry_api:
+    build: 
+      context: ../SampleStack.Telemetry.Api/
+      dockerfile: ./Dockerfile
+    container_name: telemetry_api
+    env_file: env_file.env  
+    ports:
+      - "${API_HTTP_PORT}:${API_HTTP_PORT}"
+
+  telemetry_app:
+    build: 
+      context: ./
+      dockerfile: ./Dockerfile
+    container_name: telemetry_app
+    env_file: env_file.env
+    depends_on:
+      - telemetry_api
