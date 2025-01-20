@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry", "Sa
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Tests", "SampleStack.Telemetry.Tests\SampleStack.Telemetry.Tests.csproj", "{8070263C-3B3C-4BA6-8F13-36BDFB2B9CE7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Api", "SampleStack.Telemetry.Api\SampleStack.Telemetry.Api.csproj", "{613073DC-07F5-44DF-ADCF-6919DA86B96B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{8070263C-3B3C-4BA6-8F13-36BDFB2B9CE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8070263C-3B3C-4BA6-8F13-36BDFB2B9CE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8070263C-3B3C-4BA6-8F13-36BDFB2B9CE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{613073DC-07F5-44DF-ADCF-6919DA86B96B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{613073DC-07F5-44DF-ADCF-6919DA86B96B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{613073DC-07F5-44DF-ADCF-6919DA86B96B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{613073DC-07F5-44DF-ADCF-6919DA86B96B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

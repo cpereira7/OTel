@@ -11,12 +11,13 @@ var host = Host.CreateDefaultBuilder(args)
 
         var httpClientConfiguration = new Action<HttpClient>(c =>
         {
-            c.BaseAddress = new Uri("https://localhost");
+            c.BaseAddress = new Uri("http://localhost:5225/");
             c.Timeout = TimeSpan.FromSeconds(60);
         });
 
         var httpClientHandlerConfiguration = new HttpClientHandler
         {
+            // Ignore Server Certificate Validation
             ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => { return true; }
         };
 
@@ -29,7 +30,7 @@ var host = Host.CreateDefaultBuilder(args)
 var httpClient = host.Services.GetRequiredService<IHttpClientFactory>().CreateClient("api");
 
 
-var response = await httpClient.GetAsync("/v3.1/all");
+var response = await httpClient.GetAsync("/weatherforecast");
 
 var responseContent = await response.Content.ReadAsStringAsync();
 Console.WriteLine(response.Headers);
