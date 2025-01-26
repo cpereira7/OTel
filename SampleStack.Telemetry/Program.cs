@@ -5,6 +5,7 @@ using SampleStack.Telemetry.HttpHandler;
 Console.WriteLine("Hello, World!");
 
 var host = Host.CreateDefaultBuilder(args)
+    .ConfigureAppLogging()
     .ConfigureServices((context, services) =>
     {
         services.AddScoped<CustomHttpHandler>();
@@ -27,6 +28,8 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddHttpClient("api", httpClientConfiguration)
             .AddHttpMessageHandler<CustomHttpHandler>()
             .ConfigurePrimaryHttpMessageHandler(() => httpClientHandlerConfiguration);
+
+        services.ConfigureOpenTelemetryTraces(context.Configuration);
     })
     .Build();
 
