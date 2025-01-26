@@ -1,6 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using OpenTelemetry.Trace;
+using SampleStack.Telemetry.Configuration;
+using SampleStack.Telemetry.Diagnostic;
 using SampleStack.Telemetry.HttpHandler;
+using SampleStack.Telemetry.Telemetry;
+using Serilog;
 
 Console.WriteLine("Hello, World!");
 
@@ -34,16 +40,27 @@ var host = Host.CreateDefaultBuilder(args)
     .Build();
 
 var httpClient = host.Services.GetRequiredService<IHttpClientFactory>().CreateClient("api");
+var logger = host.Services.GetRequiredService<ILogger<Program>>();
+host.Services.GetRequiredService<TracerProvider>();
 
+logger.LogInformation("Starting application");
 
 Console.WriteLine("Calling API");
 
-var response = await httpClient.GetAsync("/weatherforecast");
+while (true)
+{
 
-var responseContent = await response.Content.ReadAsStringAsync();
-Console.WriteLine(response.Headers);
-Console.WriteLine(responseContent);
+    _ = DiagnosticActivity.StartActivity("Calling API");
 
-Console.WriteLine("Calling 404");
+    var response = await httpClient.GetAsync("/weatherforecast");
 
-_ = await httpClient.GetAsync("/weatherforecast/null");
+    var responseContent = await response.Content.ReadAsStringAsync();
+    Console.WriteLine(response.Headers);
+    Console.WriteLine(responseContent);
+
+    Console.WriteLine("Calling 404");
+
+    _ = await httpClient.GetAsync("/weatherforecast/null");
+
+    Thread.Sleep(5000);
+}
