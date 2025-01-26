@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SampleStack.Telemetry.Diagnostic;
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
 
@@ -6,7 +7,7 @@ namespace SampleStack.Telemetry.Telemetry
 {
     internal static class LoggingConfiguration
     {
-        internal static void ConfigureOpenTelemetryLogging(this LoggerConfiguration loggerConfiguration, IConfiguration configuration) 
+        internal static void ConfigureOpenTelemetryLogging(this LoggerConfiguration loggerConfiguration, IConfiguration configuration)
         {
             loggerConfiguration.WriteTo.OpenTelemetry(options =>
             {

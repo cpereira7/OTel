@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry.Exporter;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
+using SampleStack.Telemetry.Diagnostic;
 
 namespace SampleStack.Telemetry.Telemetry
 {
