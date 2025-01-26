@@ -3,7 +3,7 @@ using NSubstitute;
 using RichardSzalay.MockHttp;
 using System.Net;
 
-namespace SampleStack.Telemetry.Http.Tests
+namespace SampleStack.Telemetry.HttpHandler.Tests
 {
     public class CustomHttpHandlerTests
     {
