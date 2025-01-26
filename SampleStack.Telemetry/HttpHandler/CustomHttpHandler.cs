@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SampleStack.Telemetry.Logging;
 
-namespace SampleStack.Telemetry.Http
+namespace SampleStack.Telemetry.HttpHandler
 {
     internal class CustomHttpHandler : DelegatingHandler
     {

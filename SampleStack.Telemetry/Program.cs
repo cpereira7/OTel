@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SampleStack.Telemetry.Http;
+using SampleStack.Telemetry.HttpHandler;
 
 Console.WriteLine("Hello, World!");
 
