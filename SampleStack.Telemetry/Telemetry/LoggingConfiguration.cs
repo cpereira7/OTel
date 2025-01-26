@@ -1,0 +1,29 @@
+﻿using Microsoft.Extensions.Configuration;
+using Serilog;
+using Serilog.Sinks.OpenTelemetry;
+
+namespace SampleStack.Telemetry.Telemetry
+{
+    internal static class LoggingConfiguration
+    {
+        internal static void ConfigureOpenTelemetryLogging(this LoggerConfiguration loggerConfiguration, IConfiguration configuration) 
+        {
+            loggerConfiguration.WriteTo.OpenTelemetry(options =>
+            {
+                options.Endpoint = new Uri(configuration.GetConnectionString("OpenTelemetry")).ToString();
+                options.Protocol = OtlpProtocol.Grpc;
+
+                options.ResourceAttributes = DiagnosticNames.Attributes;
+
+                options.IncludedData = IncludedData.MessageTemplateTextAttribute |
+                    IncludedData.TraceIdField | IncludedData.SpanIdField;
+
+                options.BatchingOptions.BatchSizeLimit = 700;
+                options.BatchingOptions.BufferingTimeLimit = TimeSpan.FromSeconds(5);
+                options.BatchingOptions.QueueLimit = 10;
+            })
+            .Enrich.FromLogContext()
+            .Enrich.With<ActivityEnricher>();
+        }
+    }
+}
