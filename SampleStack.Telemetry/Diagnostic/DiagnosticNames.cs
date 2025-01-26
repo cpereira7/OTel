@@ -1,4 +1,4 @@
-﻿namespace SampleStack.Telemetry.Telemetry
+﻿namespace SampleStack.Telemetry.Diagnostic
 {
     internal static class DiagnosticNames
     {
@@ -7,11 +7,11 @@
 
         public static Dictionary<string, object> Attributes => new()
         {
-           ["host.name"] = Environment.MachineName,
-           ["host.environment"] = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development",
-           ["os.description"] = Environment.OSVersion.VersionString,
-           ["service.name"] = ServiceName,
-           ["service.version"] = ServiceVersion
+            ["host.name"] = Environment.MachineName,
+            ["host.environment"] = Environment.GetEnvironmentVariable("DOTNET_ENVIRONMENT") ?? "Development",
+            ["os.description"] = Environment.OSVersion.VersionString,
+            ["service.name"] = ServiceName,
+            ["service.version"] = ServiceVersion
         };
     }
 }

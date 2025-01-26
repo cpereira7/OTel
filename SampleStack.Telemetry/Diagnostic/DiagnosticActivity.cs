@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SampleStack.Telemetry.Telemetry
+namespace SampleStack.Telemetry.Diagnostic
 {
     public static class DiagnosticActivity
     {
