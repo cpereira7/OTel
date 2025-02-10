@@ -8,8 +8,6 @@ services:
     ports:
       - "${API_HTTP_PORT}:${API_HTTP_PORT}"
     depends_on:
-      - otel_collector
-      - data_prepper
       - opensearch
 
   telemetry_app:
@@ -18,21 +16,23 @@ services:
       dockerfile: ./Dockerfile
     container_name: telemetry_app
     env_file: env_file.env
+    environment:
+      - ConnectionStrings__OpenTelemetry=http://${OPENTELEMETRY_HOST_PORT}
     depends_on:
       - telemetry_api
 
   otel_collector:
-    image: otel/opentelemetry-collector:0.94.0
+    image: otel/opentelemetry-collector:0.118.0
     container_name: collector
     hostname: collector
-    env_file: env_file.env  
+    env_file: env_file.env
     restart: unless-stopped
     ports:
-      - "4317:4317" #gprc
-      - "55679:55679" #healthcheck
-      - "55680:55680" #oltp
+      - "4317:4317" 
+      - "55679:55679"
+      - "55680:55680"
     volumes:
-      - ./collector/config.yaml:/etc/otel-collector-config.yaml
+      - ./collector/config.yaml:/etc/otelcol/config.yaml
     depends_on:
       - data_prepper
 
@@ -40,7 +40,7 @@ services:
     image: opensearchproject/data-prepper:2.6.1
     container_name: data-prepper
     hostname: data-prepper
-    env_file: env_file.env  
+    env_file: env_file.env 
     restart: unless-stopped
     ports:
       - "2021:2021"
@@ -49,6 +49,8 @@ services:
       - "21892:21892"
     volumes:
       - ./data-prepper/pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
+    depends_on:
+      - opensearch
   
   opensearch:
     image: opensearchproject/opensearch:2.11.1
@@ -59,11 +61,6 @@ services:
     environment:
       - discovery.type=single-node
       - "http.cors.enabled=true"
-      - "http.cors.allow-origin=*"
-      - "http.cors.allow-credentials=true"
-      - "http.cors.allow-methods=OPTIONS,HEAD,GET,POST,PUT,DELETE"
-      - "http.cors.allow-headers=Authorization,Content-Type"
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=admin
     ulimits:
       memlock:
         soft: -1
