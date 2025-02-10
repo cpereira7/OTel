@@ -11,7 +11,7 @@ namespace SampleStack.Telemetry.Telemetry
         {
             loggerConfiguration.WriteTo.OpenTelemetry(options =>
             {
-                options.Endpoint = new Uri(configuration.GetConnectionString("OpenTelemetry")).ToString();
+                options.Endpoint = configuration.GetConnectionString("OpenTelemetry");
                 options.Protocol = OtlpProtocol.Grpc;
 
                 options.ResourceAttributes = DiagnosticNames.Attributes;
