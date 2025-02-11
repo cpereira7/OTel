@@ -16,8 +16,17 @@ raw-pipeline:
   source:
     pipeline:
       name: "entry-pipeline"
+  buffer:
+    bounded_blocking:
+      buffer_size: 512
+      batch_size: 64
   processor:
     - otel_trace_raw:
+    - otel_trace_group:
+        hosts: ["https://opensearch:9200"]
+        insecure: true
+        username: "admin"
+        password: "admin"
   sink:
     - opensearch:
         hosts: ["https://opensearch:9200"]
@@ -43,7 +52,12 @@ service-map-pipeline:
         index_type: trace-analytics-service-map
 
 otel-logs-pipeline:
+  workers: 1
   delay: "100"
+  buffer:
+    bounded_blocking:
+      buffer_size: 512
+      batch_size: 64
   source:
     otel_logs_source:
       port: 21892

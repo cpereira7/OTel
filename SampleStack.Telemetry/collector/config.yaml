@@ -12,10 +12,7 @@ processors:
     send_batch_max_size: 11000
     timeout: 10s
 
-exporters:
-  logging:
-    logLevel: normal
-  
+exporters:  
   otlp/data-prepper-traces:
     endpoint: data-prepper:21890
     tls:
