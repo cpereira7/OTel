@@ -12,15 +12,15 @@ namespace SampleStack.Telemetry.Configuration
         {
             hostBuilder.ConfigureLogging(logging =>
             {
-                 logging.Configure(options =>
-                 {
-                     options.ActivityTrackingOptions = ActivityTrackingOptions.SpanId | ActivityTrackingOptions.TraceId;
-                 });
+                logging.Configure(options =>
+                {
+                    options.ActivityTrackingOptions = ActivityTrackingOptions.SpanId | ActivityTrackingOptions.TraceId;
+                });
             })
             .UseSerilog((context, configuration) =>
             {
-                 configuration.ReadFrom.Configuration(context.Configuration);
-                 configuration.ConfigureOpenTelemetryLogging(context.Configuration);
+                configuration.ReadFrom.Configuration(context.Configuration);
+                configuration.ConfigureOpenTelemetryLogging(context.Configuration);
             });
 
             return hostBuilder;
