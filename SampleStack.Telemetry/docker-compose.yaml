@@ -33,7 +33,7 @@ services:
       - ${OTEL_COLLECTOR_GRPC_PORT}:${OTEL_COLLECTOR_GRPC_PORT}
       - ${OTEL_COLLECTOR_HTTP_PORT}:${OTEL_COLLECTOR_HTTP_PORT}
     volumes:
-      - ./collector/config.yaml:/etc/otelcol/config.yaml
+      - ./Infrastructure/collector-config.yaml:/etc/otelcol/config.yaml
     depends_on:
       - data_prepper
 
@@ -49,7 +49,7 @@ services:
       - ${DATA_PREPPER_METRICS_PORT}:${DATA_PREPPER_METRICS_PORT}
       - ${DATA_PREPPER_LOGS_PORT}:${DATA_PREPPER_LOGS_PORT}
     volumes:
-      - ./data-prepper/pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
+      - ./Infrastructure/dataprepper-pipelines.yaml:/usr/share/data-prepper/pipelines/pipelines.yaml
     depends_on:
       - opensearch
   
