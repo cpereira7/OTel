@@ -31,6 +31,8 @@ namespace SampleStack.Telemetry.Configuration
                 .ConfigurePrimaryHttpMessageHandler(() => httpClientHandlerConfiguration);
 
             services.ConfigureOpenTelemetryTraces(configuration);
+
+            services.AddScoped<ApiConsumer>();
         }
     }
 }
