@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging;
 using OpenTelemetry.Trace;
 using SampleStack.Telemetry.Configuration;
 using SampleStack.Telemetry.Diagnostic;
+using SampleStack.Telemetry.Helpers;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppLogging()
@@ -20,37 +21,55 @@ var configuration = host.Services.GetRequiredService<IConfiguration>();
 
 host.Services.GetRequiredService<TracerProvider>();
 
-logger.LogInformation("Starting Client Application");
+// Generate a unique identifier for this execution
+var executionId = Guid.NewGuid().ToString();
+
+logger.LogInformation("Starting Client Application with Execution ID: {ExecutionId}", executionId);
 
 Console.WriteLine($"Base Address: {httpClient.BaseAddress}");
 Console.WriteLine($"Telemetry Address: {configuration.GetConnectionString("OpenTelemetry")}");
+Console.WriteLine($"Execution ID: {executionId}");
 
-await RunApiCallsAsync(httpClient, logger);
+await RunApiCallsAsync();
 
-static async Task RunApiCallsAsync(HttpClient httpClient, ILogger logger)
+logger.LogInformation("Finished Client Application with Execution ID: {ExecutionId}", executionId);
+Console.WriteLine($"Finished Execution ID: {executionId}");
+
+async Task RunApiCallsAsync()
 {
     for (int run = 0; run < 15; run++)
     {
         try
         {
-            using var activity = DiagnosticActivity.StartActivity("Calling API", run);
-            activity?.SetTag("run", run);
-
-            await httpClient.GetAsync("/weatherforecast");
+            await CallApiEndpoint("/weatherforecast", run);
 
             if (run % 2 == 0)
             {
-                Console.WriteLine("Calling 404");
-                await httpClient.GetAsync("/weatherforecast/null");
+                // simulate an error trace
+                await CallApiEndpoint("/weatherforecast/null", run);
             }
+
+            ConsoleHelpers.DisplayProgress(run + 1, 15);
         }
         catch (Exception ex)
         {
-            logger.LogError(ex, "Error calling API");
+            logger.LogError(ex, "Error calling API on run {RunNumber} with Execution ID: {ExecutionId}", run, executionId);
         }
         finally
         {
             await Task.Delay(15000);
         }
     }
+}
+
+async Task CallApiEndpoint(string endpoint, int run)
+{
+    using var activity = DiagnosticActivity.StartActivity("Calling API", run);
+    activity?.SetTag("ExecutionId", executionId);
+
+    logger.LogInformation("Calling API #{RunNumber}: {Endpoint} with Execution ID: {ExecutionId}", run, endpoint, executionId);
+
+    await httpClient.GetAsync(endpoint);
+
+    activity?.Dispose();
 }
