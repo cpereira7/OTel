@@ -5,7 +5,7 @@ services:
       dockerfile: ./SampleStack.Telemetry.Api/Dockerfile
     container_name: ${API_HOST}
     hostname: ${API_HOST}
-    env_file: env_file.env  
+    env_file: env_file.env
     ports:
       - ${API_HTTP_PORT}:${API_HTTP_PORT}
     depends_on:
@@ -88,3 +88,14 @@ services:
       - ${OPENSEARCH_DASHBOARDS_PORT}:${OPENSEARCH_DASHBOARDS_PORT}
     depends_on:
       - opensearch
+
+  jaeger:
+    image: jaegertracing/all-in-one:1.65.0
+    container_name: ${JAEGER_HOST}
+    hostname: ${JAEGER_HOST}
+    env_file: env_file.env  
+    restart: unless-stopped
+    ports:
+      - ${JAEGER_UDP_PORT}:${JAEGER_UDP_PORT}/udp
+      - ${JAEGER_UI_PORT}:${JAEGER_UI_PORT}
+      - ${JAEGER_HTTP_PORT}:${JAEGER_HTTP_PORT}
