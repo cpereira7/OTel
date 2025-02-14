@@ -1,8 +1,8 @@
 services:
   telemetry_api:
     build: 
-      context: ../SampleStack.Telemetry.Api/
-      dockerfile: ./Dockerfile
+      context: ../
+      dockerfile: ./SampleStack.Telemetry.Api/Dockerfile
     container_name: ${API_HOST}
     hostname: ${API_HOST}
     env_file: env_file.env  
@@ -13,8 +13,8 @@ services:
 
   telemetry_app:
     build: 
-      context: ./
-      dockerfile: ./Dockerfile
+      context: ../
+      dockerfile: ./SampleStack.Telemetry/Dockerfile
     container_name: ${TELEMETRY_APP_HOST}
     hostname: ${TELEMETRY_APP_HOST}
     env_file: env_file.env

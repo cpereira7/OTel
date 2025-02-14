@@ -10,10 +10,10 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["SampleStack.Telemetry.csproj", "."]
-RUN dotnet restore "./SampleStack.Telemetry.csproj"
+COPY ["SampleStack.Telemetry/SampleStack.Telemetry.csproj", "SampleStack.Telemetry/"]
+RUN dotnet restore "./SampleStack.Telemetry/SampleStack.Telemetry.csproj"
 COPY . .
-WORKDIR "/src/."
+WORKDIR "/src/SampleStack.Telemetry"
 RUN dotnet build "./SampleStack.Telemetry.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
