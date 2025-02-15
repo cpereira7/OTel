@@ -1,7 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using SampleStack.Telemetry.HttpHandler;
-using SampleStack.Telemetry.Telemetry;
+using SampleStack.Telemetry.Generics.Telemetry;
+using OpenTelemetry.Trace;
 
 namespace SampleStack.Telemetry.Configuration
 {
@@ -30,7 +31,10 @@ namespace SampleStack.Telemetry.Configuration
                 .AddHttpMessageHandler<CustomHttpHandler>()
                 .ConfigurePrimaryHttpMessageHandler(() => httpClientHandlerConfiguration);
 
-            services.ConfigureOpenTelemetryTraces(configuration);
+            services.ConfigureOpenTelemetryTraces(configuration, tracing =>
+            {
+                tracing.AddHttpClientInstrumentation();
+            });
 
             services.AddScoped<ApiConsumer>();
         }

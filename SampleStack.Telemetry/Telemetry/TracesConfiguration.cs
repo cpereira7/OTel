@@ -9,6 +9,7 @@ namespace SampleStack.Telemetry.Telemetry
 {
     internal static class TracesConfiguration
     {
+        [Obsolete("Method is deprecated, please the method of the Generics Library instead.", false)]
         internal static void ConfigureOpenTelemetryTraces(this IServiceCollection services, IConfiguration configuration)
         {
             var resourceBuilder = ResourceBuilder.CreateDefault()
