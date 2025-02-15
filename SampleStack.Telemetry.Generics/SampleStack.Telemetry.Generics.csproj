@@ -4,8 +4,19 @@
     <TargetFrameworks>net9.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+	<DefineConstants Condition="'$(IsAspNetCoreApp)' == 'true'">$(DefineConstants);USE_ASPNETCORE_INSTRUMENTATION</DefineConstants>
   </PropertyGroup>
 
+	<ItemGroup>
+		<!-- Include the package only if the app is ASP.NET Core -->
+		<PackageReference
+		  Include="OpenTelemetry.Instrumentation.AspNetCore"
+		  Version="1.11.0"
+		  Condition="'$(IsAspNetCoreApp)' == 'true'"
+		  IncludeAssets="runtime; build; native; contentfiles; analyzers; buildtransitive"
+		  PrivateAssets="all"
+    />
+	</ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="9.0.0" />
 	<PackageReference Include="OpenTelemetry" Version="1.11.0" />
