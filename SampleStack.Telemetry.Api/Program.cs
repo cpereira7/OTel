@@ -1,11 +1,15 @@
 using OpenTelemetry.Trace;
 using SampleStack.Telemetry.Api;
 using SampleStack.Telemetry.Generics.Telemetry;
+using SampleStack.Telemetry.Generics.Configuration;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Host.ConfigureAppLogging();
 
 builder.Services.ConfigureOpenTelemetryTraces(builder.Configuration, tracing =>
 {

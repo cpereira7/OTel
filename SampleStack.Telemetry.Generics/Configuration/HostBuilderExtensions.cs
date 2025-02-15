@@ -1,12 +1,12 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using SampleStack.Telemetry.Telemetry;
+using SampleStack.Telemetry.Generics.Telemetry;
 using Serilog;
 
-namespace SampleStack.Telemetry.Configuration
+namespace SampleStack.Telemetry.Generics.Configuration
 {
-    internal static class HostBuilderExtensions
+    public static class HostBuilderExtensions
     {
         public static IHostBuilder ConfigureAppLogging(this IHostBuilder hostBuilder)
         {

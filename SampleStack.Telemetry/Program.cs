@@ -4,6 +4,7 @@ using Microsoft.Extensions.Hosting;
 using OpenTelemetry.Trace;
 using SampleStack.Telemetry;
 using SampleStack.Telemetry.Configuration;
+using SampleStack.Telemetry.Generics.Configuration;
 
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureAppLogging()
