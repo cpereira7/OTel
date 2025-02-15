@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
-using SampleStack.Telemetry.Diagnostic;
+using SampleStack.Telemetry.Generics.Diagnostics;
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
 

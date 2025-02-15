@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using SampleStack.Telemetry.Generics.Diagnostics;
+using System.Diagnostics;
 
 namespace SampleStack.Telemetry.Diagnostic
 {
