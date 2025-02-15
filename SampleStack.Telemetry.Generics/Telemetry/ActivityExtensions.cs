@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
 
-namespace SampleStack.Telemetry.Telemetry
+namespace SampleStack.Telemetry.Generics.Telemetry
 {
-    internal static class ActivityExtensions
+    public static class ActivityExtensions
     {
         public static string GetSpanId(this Activity activity)
         {
