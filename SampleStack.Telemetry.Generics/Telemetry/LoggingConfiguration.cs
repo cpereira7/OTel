@@ -1,15 +1,13 @@
 ﻿using Microsoft.Extensions.Configuration;
 using SampleStack.Telemetry.Generics.Diagnostics;
-using SampleStack.Telemetry.Generics.Telemetry;
 using Serilog;
 using Serilog.Sinks.OpenTelemetry;
 
-namespace SampleStack.Telemetry.Telemetry
+namespace SampleStack.Telemetry.Generics.Telemetry
 {
-    internal static class LoggingConfiguration
+    public static class LoggingConfiguration
     {
-        [Obsolete("Method is deprecated, please the method of the Generics Library instead.", false)]
-        internal static void ConfigureOpenTelemetryLogging(this LoggerConfiguration loggerConfiguration, IConfiguration configuration)
+        public static void ConfigureOpenTelemetryLogging(this LoggerConfiguration loggerConfiguration, IConfiguration configuration)
         {
             loggerConfiguration.WriteTo.OpenTelemetry(options =>
             {
