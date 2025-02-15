@@ -46,7 +46,3 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast");
 
 app.Run();
-
-{
-    public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
-}
