@@ -13,7 +13,16 @@ builder.Host.ConfigureAppLogging();
 
 builder.Services.ConfigureOpenTelemetryTraces(builder.Configuration, tracing =>
 {
-    tracing.AddAspNetCoreInstrumentation();
+    tracing.AddAspNetCoreInstrumentation(options =>
+    {
+        options.EnrichWithHttpRequest = (activity, httpRequest) =>
+        {
+            if (httpRequest.Headers.TryGetValue("X-Request-ID", out var requestId))
+            {
+                activity?.SetTag("X-Request-ID", requestId.ToString());
+            }
+        };
+    });
 });
 
 var app = builder.Build();

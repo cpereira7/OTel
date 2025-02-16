@@ -33,7 +33,16 @@ namespace SampleStack.Telemetry.Configuration
 
             services.ConfigureOpenTelemetryTraces(configuration, tracing =>
             {
-                tracing.AddHttpClientInstrumentation();
+                tracing.AddHttpClientInstrumentation(options =>
+                {
+                    options.EnrichWithHttpRequestMessage = (activity, request) =>
+                    {
+                        if (request.Headers.TryGetValues("X-Request-ID", out var requestIds))
+                        {
+                            activity?.SetTag("X-Request-ID", string.Join(",", requestIds));
+                        }
+                    };
+                });
             });
 
             services.AddScoped<ApiConsumer>();
