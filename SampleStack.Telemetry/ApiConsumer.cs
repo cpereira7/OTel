@@ -1,5 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using SampleStack.Telemetry.Diagnostic;
+using SampleStack.Telemetry.Generics.Diagnostics;
 using SampleStack.Telemetry.Helpers;
 using SampleStack.Telemetry.Logging;
 

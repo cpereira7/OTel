@@ -2,7 +2,7 @@
 
 namespace SampleStack.Telemetry.Generics.Telemetry
 {
-    public static class ActivityExtensions
+    internal static class ActivityExtensions
     {
         public static string GetSpanId(this Activity activity)
         {

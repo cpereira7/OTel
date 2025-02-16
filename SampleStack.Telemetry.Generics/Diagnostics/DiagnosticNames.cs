@@ -2,7 +2,7 @@
 
 namespace SampleStack.Telemetry.Generics.Diagnostics
 {
-    public static class DiagnosticNames
+    internal static class DiagnosticNames
     {
         public static string ServiceName { get; } = Environment.GetEnvironmentVariable("SERVICE_NAME")
             ?? Assembly.GetEntryAssembly()?.GetName().Name

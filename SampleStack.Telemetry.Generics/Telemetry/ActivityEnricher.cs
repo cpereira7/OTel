@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace SampleStack.Telemetry.Generics.Telemetry
 {
-    public class ActivityEnricher : ILogEventEnricher
+    internal class ActivityEnricher : ILogEventEnricher
     {
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
         {
