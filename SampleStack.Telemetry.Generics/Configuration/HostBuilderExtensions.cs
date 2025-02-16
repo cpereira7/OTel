@@ -8,6 +8,11 @@ namespace SampleStack.Telemetry.Generics.Configuration
 {
     public static class HostBuilderExtensions
     {
+        /// <summary>
+        /// Configures application logging for the host builder.
+        /// </summary>
+        /// <param name="hostBuilder">The <see cref="IHostBuilder"/> to configure.</param>
+        /// <returns>The configured <see cref="IHostBuilder"/>.</returns>
         public static IHostBuilder ConfigureAppLogging(this IHostBuilder hostBuilder)
         {
             hostBuilder.ConfigureLogging(logging =>

@@ -7,6 +7,11 @@ namespace SampleStack.Telemetry.Generics.Telemetry
 {
     public static class LoggingConfiguration
     {
+        /// <summary>
+        /// Configures OpenTelemetry logging for the provided <see cref="LoggerConfiguration"/>.
+        /// </summary>
+        /// <param name="loggerConfiguration">The logger configuration to apply OpenTelemetry settings to.</param>
+        /// <param name="configuration">The application configuration containing connection strings and other settings.</param>
         public static void ConfigureOpenTelemetryLogging(this LoggerConfiguration loggerConfiguration, IConfiguration configuration)
         {
             loggerConfiguration.WriteTo.OpenTelemetry(options =>
