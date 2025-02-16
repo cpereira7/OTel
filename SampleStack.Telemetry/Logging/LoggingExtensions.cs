@@ -1,27 +1,19 @@
 ﻿using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SampleStack.Telemetry.Logging
 {
     public static partial class LoggingExtensions
     {
-        [LoggerMessage(LogLevel.Information, "Request: {requestMessage}")]
-        public static partial void InfoHttpRequest(this ILogger logger, HttpRequestMessage requestMessage);
+        [LoggerMessage(LogLevel.Information, "Starting Client Application with Execution ID: {executionId}")]
+        public static partial void LogStartingClientApplication(this ILogger logger, string executionId);
 
-        [LoggerMessage(LogLevel.Debug, "Request Content ({requestId}):\n {content}")]
-        public static partial void DebugHttpRequestContent(this ILogger logger, string requestId, string content);
+        [LoggerMessage(LogLevel.Information, "Calling API #{runNumber}: {endpoint} with Execution ID: {executionId}")]
+        public static partial void LogCallingApi(this ILogger logger, int runNumber, string endpoint, string executionId);
 
-        [LoggerMessage(LogLevel.Information, "Response: {responseMessage}")]
-        public static partial void InfoHttpResponse(this ILogger logger, HttpResponseMessage responseMessage);
+        [LoggerMessage(LogLevel.Error, "Error calling API on run {runNumber} with Execution ID: {executionId}")]
+        public static partial void LogErrorCallingApi(this ILogger logger, Exception exception, int runNumber, string executionId);
 
-        [LoggerMessage(LogLevel.Debug, "Response Content ({requestId}):\n {content}")]
-        public static partial void DebugHttpResponseContent(this ILogger logger, string requestId, string content);
-
-        [LoggerMessage(LogLevel.Warning, "Response Content ({requestId}):\n {content}")]
-        public static partial void FailHttpResponseContent(this ILogger logger, string requestId, string content);
+        [LoggerMessage(LogLevel.Information, "Finished Client Application with Execution ID: {executionId}")]
+        public static partial void LogFinishedClientApplication(this ILogger logger, string executionId);
     }
 }

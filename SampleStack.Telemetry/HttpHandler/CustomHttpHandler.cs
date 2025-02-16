@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Logging;
-using SampleStack.Telemetry.Logging;
 
 namespace SampleStack.Telemetry.HttpHandler
 {
@@ -24,27 +23,27 @@ namespace SampleStack.Telemetry.HttpHandler
             var requestId = Guid.NewGuid().ToString();
             request.Headers.Add("X-Request-ID", requestId);
 
-            _logger.InfoHttpRequest(request);
+            _logger.LogInfoHttpRequest(request);
 
             if (request.Content != null && _logger.IsEnabled(LogLevel.Debug))
             {
                 var content = await request.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
-                _logger.DebugHttpRequestContent(requestId, content);
+                _logger.LogDebugHttpRequestContent(requestId, content);
             }
 
             HttpResponseMessage responseMessage = await base.SendAsync(request, cancellationToken);
 
-            _logger.InfoHttpResponse(responseMessage);
+            _logger.LogInfoHttpResponse(responseMessage);
 
             if (responseMessage.Content != null && (_logger.IsEnabled(LogLevel.Debug) || !responseMessage.IsSuccessStatusCode))
             {
                 var content = await responseMessage.Content.ReadAsStringAsync(cancellationToken).ConfigureAwait(false);
 
-                _logger.DebugHttpResponseContent(requestId, content);
+                _logger.LogDebugHttpResponseContent(requestId, content);
 
                 if (!responseMessage.IsSuccessStatusCode)
                 {
-                    _logger.FailHttpResponseContent(requestId, content);
+                    _logger.LogFailHttpResponseContent(requestId, content);
                 }
             }
 

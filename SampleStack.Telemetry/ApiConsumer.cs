@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using SampleStack.Telemetry.Diagnostic;
 using SampleStack.Telemetry.Helpers;
+using SampleStack.Telemetry.Logging;
 
 namespace SampleStack.Telemetry
 {
@@ -19,7 +20,7 @@ namespace SampleStack.Telemetry
 
         public async Task RunApiCallsAsync()
         {
-            logger.LogInformation("Starting Client Application with Execution ID: {ExecutionId}", executionId);
+            logger.LogStartingClientApplication(executionId);
 
             for (int run = 0; run < 15; run++)
             {
@@ -37,7 +38,7 @@ namespace SampleStack.Telemetry
                 }
                 catch (Exception ex)
                 {
-                    logger.LogError(ex, "Error calling API on run {RunNumber} with Execution ID: {ExecutionId}", run, executionId);
+                    logger.LogErrorCallingApi(ex, run, executionId);
                 }
                 finally
                 {
@@ -45,7 +46,7 @@ namespace SampleStack.Telemetry
                 }
             }
 
-            logger.LogInformation("Finished Client Application with Execution ID: {ExecutionId}", executionId);
+            logger.LogFinishedClientApplication(executionId);
         }
 
         async Task CallApiEndpoint(string endpoint, int run)
@@ -53,7 +54,7 @@ namespace SampleStack.Telemetry
             using var activity = DiagnosticActivity.StartActivity("Calling API", run);
             activity?.SetTag("ExecutionId", executionId);
 
-            logger.LogInformation("Calling API #{RunNumber}: {Endpoint} with Execution ID: {ExecutionId}", run, endpoint, executionId);
+            logger.LogCallingApi(run, endpoint, executionId);
 
             await httpClient.GetAsync(endpoint);
 
