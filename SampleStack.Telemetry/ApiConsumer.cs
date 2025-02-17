@@ -7,58 +7,56 @@ namespace SampleStack.Telemetry
 {
     internal class ApiConsumer
     {
-        readonly ILogger<ApiConsumer> logger;
-        readonly HttpClient httpClient;
-        readonly string executionId;
+        private const string WeatherForecastEndpoint = "/weatherforecast";
+        private const string WeatherForecastDetailsEndpoint = "/weatherforecast/details";
+
+        private readonly ILogger<ApiConsumer> logger;
+        private readonly HttpClient httpClient;
 
         public ApiConsumer(ILogger<ApiConsumer> logger, IHttpClientFactory httpClientFactory)
         {
             this.logger = logger;
             this.httpClient = httpClientFactory.CreateClient("api");
-            this.executionId = Guid.NewGuid().ToString();
         }
 
         public async Task RunApiCallsAsync()
         {
-            logger.LogStartingClientApplication(executionId);
+            logger.LogStartingClientApplication();
 
             for (int run = 0; run < 15; run++)
             {
                 try
                 {
-                    await CallApiEndpoint("/weatherforecast", run);
+                    using var activity = DiagnosticActivity.StartActivity("Calling API Service");
 
-                    if (run % 2 == 0)
-                    {
-                        // simulate an error trace
-                        await CallApiEndpoint("/weatherforecast/null", run);
-                    }
+                    var data = await CallApiEndpoint(WeatherForecastEndpoint);
 
-                    ConsoleHelpers.DisplayProgress(run + 1, 15);
+                    // simulate an error trace span
+                    if (data.Contains("Scorching"))
+                        await CallApiEndpoint(WeatherForecastDetailsEndpoint);
                 }
                 catch (Exception ex)
                 {
-                    logger.LogErrorCallingApi(ex, run, executionId);
+                    logger.LogErrorCallingApi(ex);
                 }
                 finally
                 {
+                    ConsoleHelpers.DisplayProgress(run + 1, 15);
                     await Task.Delay(15000);
                 }
             }
 
-            logger.LogFinishedClientApplication(executionId);
+            logger.LogFinishedClientApplication();
         }
 
-        async Task CallApiEndpoint(string endpoint, int run)
+        private async Task<string> CallApiEndpoint(string endpoint)
         {
-            using var activity = DiagnosticActivity.StartActivity("Calling API", run);
-            activity?.SetTag("ExecutionId", executionId);
+            var response = await httpClient.GetAsync(endpoint).ConfigureAwait(false);
+            response.EnsureSuccessStatusCode();
 
-            logger.LogCallingApi(run, endpoint, executionId);
+            var responseData = await response.Content.ReadAsStringAsync();
 
-            await httpClient.GetAsync(endpoint);
-
-            activity?.Dispose();
+            return responseData;
         }
     }
 }
