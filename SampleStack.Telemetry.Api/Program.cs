@@ -54,4 +54,4 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
-app.Run();
+await app.RunAsync();

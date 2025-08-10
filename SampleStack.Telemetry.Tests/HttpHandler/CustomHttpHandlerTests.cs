@@ -1,9 +1,11 @@
 ﻿using Microsoft.Extensions.Logging;
 using NSubstitute;
 using RichardSzalay.MockHttp;
+using SampleStack.Telemetry.HttpHandler;
+using SampleStack.Telemetry.Tests.Helpers;
 using System.Net;
 
-namespace SampleStack.Telemetry.HttpHandler.Tests
+namespace SampleStack.Telemetry.Tests.HttpHandler
 {
     public class CustomHttpHandlerTests
     {
@@ -59,12 +61,7 @@ namespace SampleStack.Telemetry.HttpHandler.Tests
             await _httpClient.SendAsync(request, default!);
 
             // Assert
-            _loggerMock.Received(1).Log(
-                Arg.Is<LogLevel>(l => l == LogLevel.Information),
-                Arg.Any<EventId>(),
-                Arg.Is<object>(x => x.ToString().Contains(expectedInfoHttpRequest)),
-                Arg.Is<Exception>(e => e == null),
-                Arg.Any<Func<object, Exception?, string>>());
+            _loggerMock.ShouldHaveLogged(LogLevel.Information, expectedInfoHttpRequest);
         }
 
         [Fact]
@@ -75,21 +72,15 @@ namespace SampleStack.Telemetry.HttpHandler.Tests
             {
                 Content = new StringContent("Test Content")
             };
-            var expectedDebugHttpRequestContent = string.Empty;
 
             // Act
             await _httpClient.SendAsync(request, default!);
 
             // Assert
             var header = request.Headers.GetValues("X-Request-ID").First();
-            expectedDebugHttpRequestContent = $"Request Content ({header}):\n Test Content";
+            var expectedDebugHttpRequestContent = $"Request Content ({header}):\n Test Content";
 
-            _loggerMock.Received(1).Log(
-                Arg.Is<LogLevel>(l => l == LogLevel.Debug),
-                Arg.Any<EventId>(),
-                Arg.Is<object>(x => x.ToString().Contains(expectedDebugHttpRequestContent)),
-                Arg.Is<Exception>(e => e == null),
-                Arg.Any<Func<object, Exception?, string>>());
+            _loggerMock.ShouldHaveLogged(LogLevel.Debug, expectedDebugHttpRequestContent);
         }
 
         [Fact]
@@ -103,12 +94,7 @@ namespace SampleStack.Telemetry.HttpHandler.Tests
             await _httpClient.SendAsync(request, default!);
 
             // Assert
-            _loggerMock.Received(1).Log(
-                Arg.Is<LogLevel>(l => l == LogLevel.Information),
-                Arg.Any<EventId>(),
-                Arg.Is<object>(x => x.ToString().Contains(expectedInfoHttpResponse)),
-                Arg.Is<Exception>(e => e == null),
-                Arg.Any<Func<object, Exception?, string>>());
+            _loggerMock.ShouldHaveLogged(LogLevel.Information, expectedInfoHttpResponse);
         }
 
         [Fact]
@@ -116,21 +102,15 @@ namespace SampleStack.Telemetry.HttpHandler.Tests
         {
             // Arrange
             var request = new HttpRequestMessage();
-            var expectedDebugHttpResponseContent = string.Empty;
 
             // Act
             await _httpClient.SendAsync(request, default!);
 
             // Assert
             var header = request.Headers.GetValues("X-Request-ID").First();
-            expectedDebugHttpResponseContent = $"Response Content ({header}):\n Test Content";
+            var expectedDebugHttpResponseContent = $"Response Content ({header}):\n Test Content";
 
-            _loggerMock.Received(1).Log(
-                Arg.Is<LogLevel>(l => l == LogLevel.Debug),
-                Arg.Any<EventId>(),
-                Arg.Is<object>(x => x.ToString().Contains(expectedDebugHttpResponseContent)),
-                Arg.Is<Exception>(e => e == null),
-                Arg.Any<Func<object, Exception?, string>>());
+            _loggerMock.ShouldHaveLogged(LogLevel.Debug, expectedDebugHttpResponseContent);
         }
 
         [Fact]
@@ -138,21 +118,15 @@ namespace SampleStack.Telemetry.HttpHandler.Tests
         {
             // Arrange
             var request = new HttpRequestMessage(HttpMethod.Get, "/fail");
-            var expectedFailHttpResponseContent = string.Empty;
 
             // Act
             await _httpClient.SendAsync(request, default!);
 
             // Assert
             var header = request.Headers.GetValues("X-Request-ID").First();
-            expectedFailHttpResponseContent = $"Response Content ({header}):\n Test Content";
+            var expectedFailHttpResponseContent = $"Response Content ({header}):\n Test Content";
 
-            _loggerMock.Received(1).Log(
-                Arg.Is<LogLevel>(l => l == LogLevel.Warning),
-                Arg.Any<EventId>(),
-                Arg.Is<object>(x => x.ToString().Contains(expectedFailHttpResponseContent)),
-                Arg.Is<Exception>(e => e == null),
-                Arg.Any<Func<object, Exception?, string>>());
+            _loggerMock.ShouldHaveLogged(LogLevel.Warning, expectedFailHttpResponseContent);
         }
     }
 }
