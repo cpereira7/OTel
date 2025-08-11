@@ -1,29 +1,15 @@
-using OpenTelemetry.Trace;
 using SampleStack.Telemetry.Api;
-using SampleStack.Telemetry.Generics.Telemetry;
 using SampleStack.Telemetry.Generics.Configuration;
+using SampleStack.Telemetry.Api.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+builder.Services.AddApplicationServices(builder.Configuration);
 
 builder.Host.ConfigureAppLogging();
-
-builder.Services.ConfigureOpenTelemetryTraces(builder.Configuration, tracing =>
-{
-    tracing.AddAspNetCoreInstrumentation(options =>
-    {
-        options.EnrichWithHttpRequest = (activity, httpRequest) =>
-        {
-            if (httpRequest.Headers.TryGetValue("X-Request-ID", out var requestId))
-            {
-                activity?.SetTag("X-Request-ID", requestId.ToString());
-            }
-        };
-    });
-});
 
 var app = builder.Build();
 

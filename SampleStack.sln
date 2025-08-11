@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Api",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Generics", "SampleStack.Telemetry.Generics\SampleStack.Telemetry.Generics.csproj", "{64F08EC2-90E6-430B-9F1A-1159907DFE01}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Generics.AspNet", "SampleStack.Generics.AspNet\SampleStack.Telemetry.Generics.AspNet.csproj", "{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{64F08EC2-90E6-430B-9F1A-1159907DFE01}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{64F08EC2-90E6-430B-9F1A-1159907DFE01}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{64F08EC2-90E6-430B-9F1A-1159907DFE01}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

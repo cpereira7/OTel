@@ -12,10 +12,10 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1" />
-    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.12.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\SampleStack.Generics.AspNet\SampleStack.Telemetry.Generics.AspNet.csproj" />
     <ProjectReference Include="..\SampleStack.Telemetry.Generics\SampleStack.Telemetry.Generics.csproj" />
   </ItemGroup>
 

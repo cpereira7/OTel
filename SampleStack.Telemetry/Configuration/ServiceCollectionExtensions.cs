@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using SampleStack.Telemetry.HttpHandler;
 using SampleStack.Telemetry.Generics.Telemetry;
 using OpenTelemetry.Trace;
+using SampleStack.Telemetry.Generics.Configuration;
 
 namespace SampleStack.Telemetry.Configuration
 {
@@ -33,16 +34,7 @@ namespace SampleStack.Telemetry.Configuration
 
             services.ConfigureOpenTelemetryTraces(configuration, tracing =>
             {
-                tracing.AddHttpClientInstrumentation(options =>
-                {
-                    options.EnrichWithHttpRequestMessage = (activity, request) =>
-                    {
-                        if (request.Headers.TryGetValues("X-Request-ID", out var requestIds))
-                        {
-                            activity?.SetTag("X-Request-ID", string.Join(",", requestIds));
-                        }
-                    };
-                });
+                tracing.AddRequestIdHttpClientEnrichment();
             });
 
             services.AddScoped<ApiConsumer>();
