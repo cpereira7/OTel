@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Api",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Generics", "SampleStack.Telemetry.Generics\SampleStack.Telemetry.Generics.csproj", "{64F08EC2-90E6-430B-9F1A-1159907DFE01}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Generics.AspNet", "SampleStack.Generics.AspNet\SampleStack.Telemetry.Generics.AspNet.csproj", "{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleStack.Telemetry.Generics.AspNet", "SampleStack.Telemetry.Generics.AspNet\SampleStack.Telemetry.Generics.AspNet.csproj", "{A1215A42-5F81-48F1-8BF6-DA60ACA9F80D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
